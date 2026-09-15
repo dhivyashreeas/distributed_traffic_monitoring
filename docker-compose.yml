@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # Central Monitoring Aggregator Server
+  server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.server
+    container_name: central-monitoring-server
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/traffic_monitoring.db
+    restart: always
+
+  # Distributed Node 1: North Junction
+  node-north:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+    container_name: node-north-junction
+    command: python node/node_simulator.py --junction-id J1 --name "North Junction" --server-url http://server:8000 --interval 3
+    depends_on:
+      - server
+    restart: always
+
+  # Distributed Node 2: South Crossroad
+  node-south:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+    container_name: node-south-crossroad
+    command: python node/node_simulator.py --junction-id J2 --name "South Crossroad" --server-url http://server:8000 --interval 3
+    depends_on:
+      - server
+    restart: always
+
+  # Distributed Node 3: East Expressway
+  node-east:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+    container_name: node-east-expressway
+    command: python node/node_simulator.py --junction-id J3 --name "East Expressway" --server-url http://server:8000 --interval 4
+    depends_on:
+      - server
+    restart: always
+
+  # Distributed Node 4: West Boulevard
+  node-west:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+    container_name: node-west-boulevard
+    command: python node/node_simulator.py --junction-id J4 --name "West Boulevard" --server-url http://server:8000 --interval 3
+    depends_on:
+      - server
+    restart: always
+
+  # Distributed Node 5: Central Square
+  node-central:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+    container_name: node-central-square
+    command: python node/node_simulator.py --junction-id J5 --name "Central Square" --server-url http://server:8000 --interval 5
+    depends_on:
+      - server
+    restart: always

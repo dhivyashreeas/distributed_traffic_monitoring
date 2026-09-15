@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Distributed Traffic Monitoring System</title>
+  
+  <!-- Modern Typography (Inter Font) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  
+  <!-- Chart.js for Real-time Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <!-- Custom Glassmorphism Dark Mode Styling -->
+  <link rel="stylesheet" href="/static/css/styles.css"/>
+</head>
+<body>
+  <!-- Main Layout Container -->
+  <div class="app-container">
+    
+    <!-- Top Header Bar -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="logo-icon">
+          <i class="fa-solid fa-network-wired"></i>
+        </div>
+        <div>
+          <h1>Distributed Traffic Monitoring System</h1>
+          <p class="subtitle">Academic Demonstration of Distributed Sensing, Edge Telemetry & Central Aggregation</p>
+        </div>
+      </div>
+      
+      <div class="header-status">
+        <div class="pulse-indicator">
+          <span class="pulse-dot green"></span>
+          <span id="system-status-text">SYSTEM ONLINE</span>
+        </div>
+        <div class="refresh-badge">
+          <i class="fa-solid fa-rotate-right fa-spin" id="refresh-icon"></i> Auto-polling: <span id="poll-timer">3s</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Global Key Performance Indicators (KPIs) Bar -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon blue"><i class="fa-solid fa-microchip"></i></div>
+        <div class="kpi-details">
+          <span class="kpi-label">Active Edge Nodes</span>
+          <h2 class="kpi-value" id="kpi-active-nodes">0 / 0</h2>
+          <span class="kpi-subtext">Reporting junctions</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon purple"><i class="fa-solid fa-car"></i></div>
+        <div class="kpi-details">
+          <span class="kpi-label">Network Vehicle Count</span>
+          <h2 class="kpi-value" id="kpi-total-vehicles">0</h2>
+          <span class="kpi-subtext">Sum across all nodes</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon cyan"><i class="fa-solid fa-gauge-high"></i></div>
+        <div class="kpi-details">
+          <span class="kpi-label">Network Avg Speed</span>
+          <h2 class="kpi-value" id="kpi-avg-speed">0.0 km/h</h2>
+          <span class="kpi-subtext">Overall speed metric</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon emerald"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="kpi-details">
+          <span class="kpi-label">Network Traffic Health</span>
+          <h2 class="kpi-value" id="kpi-overall-status">SMOOTH</h2>
+          <span class="kpi-subtext" id="kpi-status-desc">Normal flow</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div class="kpi-details">
+          <span class="kpi-label">Highest Density Node</span>
+          <h2 class="kpi-value text-sm" id="kpi-highest-node">None</h2>
+          <span class="kpi-subtext">Congestion bottleneck</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Area: Left Grid (Junction Cards & Charts), Right Sidebar (Logs & Alerts) -->
+    <main class="main-layout">
+      
+      <!-- Left Column -->
+      <div class="content-left">
+        
+        <!-- Junction Status Cards Section -->
+        <section class="section-container">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-map-location-dot"></i> Distributed Junction Nodes (Live Grid)</h3>
+            <span class="badge info-badge">5 Autonomous Sensor Nodes</span>
+          </div>
+          
+          <div class="junction-grid" id="junction-grid-container">
+            <!-- Dynamic Junction Cards rendered by JavaScript -->
+            <div class="loading-state">
+              <i class="fa-solid fa-circle-notch fa-spin"></i> Waiting for node telemetry stream...
+            </div>
+          </div>
+        </section>
+
+        <!-- Real-Time Analytics Chart Section -->
+        <section class="section-container mt-20">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-chart-line"></i> Real-Time Multi-Junction Traffic Comparison</h3>
+            <div class="chart-controls">
+              <button class="btn btn-sm active" id="btn-chart-speed" onclick="switchChartMode('speed')">Speed (km/h)</button>
+              <button class="btn btn-sm" id="btn-chart-vehicles" onclick="switchChartMode('vehicles')">Vehicle Count</button>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="trafficChart"></canvas>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Column Sidebar -->
+      <div class="content-right">
+        
+        <!-- Live Node Telemetry Ticker (Demonstrates Distributed Node Reports arriving in real-time) -->
+        <section class="section-container">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-terminal"></i> Distributed Node Log Stream</h3>
+            <span class="live-tag"><span class="blink">●</span> LIVE</span>
+          </div>
+          <div class="log-stream-box" id="node-log-stream">
+            <div class="log-entry system-entry">
+              <span class="log-time">[System]</span> Central server listening for distributed node heartbeats...
+            </div>
+          </div>
+        </section>
+
+        <!-- Central Congestion Alerts Panel -->
+        <section class="section-container mt-20">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-bell"></i> Central Congestion Alerts</h3>
+            <span class="badge danger-badge" id="alert-counter-badge">0 Alerts</span>
+          </div>
+          <div class="alerts-list" id="alerts-container">
+            <div class="empty-alerts">
+              <i class="fa-solid fa-circle-check"></i>
+              <p>No active congestion alerts detected.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Academic Concept Explanation Card -->
+        <section class="concept-card mt-20">
+          <h4><i class="fa-solid fa-graduation-cap"></i> Distributed Computing Concepts</h4>
+          <ul>
+            <li><strong>Distributed Monitoring:</strong> Independent edge nodes collect localized sensor telemetry without single-point dependency.</li>
+            <li><strong>Node Autonomy:</strong> Each node runs as a separate process/container with its own loop and interval timer.</li>
+            <li><strong>Concurrent Ingestion:</strong> FastAPI server handles multiple incoming node REST payloads simultaneously.</li>
+            <li><strong>Central Aggregation:</strong> SQLite + Analytics computes network-wide health and triggers threshold alerts.</li>
+          </ul>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Distributed Traffic Monitoring Application &copy; 2026 Academic Distributed Computing Project</p>
+    </footer>
+
+  </div>
+
+  <!-- App Script -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
