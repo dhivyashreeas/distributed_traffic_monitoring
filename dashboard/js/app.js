@@ -9,7 +9,10 @@ let currentChartMode = 'speed'; // 'speed' or 'vehicles'
 let historicalDataStore = {}; // { junction_id: [{ timestamp, avg_speed_kmh, vehicle_count }] }
 let knownSequenceNums = {}; // { junction_id: last_seq }
 
+let currentTheme = 'dark';
+
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   initChart();
   fetchSystemStatus();
   fetchAlerts();
@@ -20,6 +23,69 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchAlerts();
   }, 3000);
 });
+
+/**
+ * Initializes saved or default visual theme
+ */
+function initTheme() {
+  const saved = localStorage.getItem('app-theme') || 'dark';
+  applyTheme(saved);
+  const select = document.getElementById('theme-select');
+  if (select) select.value = saved;
+}
+
+/**
+ * Applies selected theme attribute and syncs Chart.js styling
+ */
+function applyTheme(themeName) {
+  currentTheme = themeName;
+  document.documentElement.setAttribute('data-theme', themeName);
+  localStorage.setItem('app-theme', themeName);
+  updateChartColors();
+}
+
+/**
+ * Syncs Chart.js colors with current active theme
+ */
+function updateChartColors() {
+  if (!trafficChart) return;
+
+  let tickColor = '#64748b';
+  let gridColor = 'rgba(255, 255, 255, 0.05)';
+  let legendColor = '#94a3b8';
+  let tooltipBg = '#1e293b';
+  let tooltipText = '#f8fafc';
+
+  if (currentTheme === 'light') {
+    tickColor = '#475569';
+    gridColor = 'rgba(15, 23, 42, 0.08)';
+    legendColor = '#334155';
+    tooltipBg = '#ffffff';
+    tooltipText = '#0f172a';
+  } else if (currentTheme === 'cyberpunk') {
+    tickColor = '#e9d5ff';
+    gridColor = 'rgba(245, 0, 255, 0.15)';
+    legendColor = '#f500ff';
+    tooltipBg = '#140a23';
+    tooltipText = '#00f0ff';
+  } else if (currentTheme === 'emerald') {
+    tickColor = '#6ee7b7';
+    gridColor = 'rgba(16, 185, 129, 0.15)';
+    legendColor = '#10b981';
+    tooltipBg = '#062017';
+    tooltipText = '#ecfdf5';
+  }
+
+  trafficChart.options.scales.x.ticks.color = tickColor;
+  trafficChart.options.scales.x.grid.color = gridColor;
+  trafficChart.options.scales.y.ticks.color = tickColor;
+  trafficChart.options.scales.y.grid.color = gridColor;
+  trafficChart.options.plugins.legend.labels.color = legendColor;
+  trafficChart.options.plugins.tooltip.backgroundColor = tooltipBg;
+  trafficChart.options.plugins.tooltip.titleColor = tooltipText;
+
+  trafficChart.update();
+}
 
 /**
  * Fetches central server status via GET /api/status
@@ -219,6 +285,7 @@ function initChart() {
       }
     }
   });
+  updateChartColors();
 }
 
 /**

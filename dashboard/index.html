@@ -36,6 +36,15 @@
       </div>
       
       <div class="header-status">
+        <div class="theme-selector-container">
+          <i class="fa-solid fa-palette"></i>
+          <select id="theme-select" class="theme-select" onchange="applyTheme(this.value)" aria-label="Select Theme">
+            <option value="dark">🌌 Dark Glass</option>
+            <option value="light">☀️ Light Glass</option>
+            <option value="cyberpunk">⚡ Cyberpunk Neon</option>
+            <option value="emerald">🌿 Emerald Matrix</option>
+          </select>
+        </div>
         <div class="pulse-indicator">
           <span class="pulse-dot green"></span>
           <span id="system-status-text">SYSTEM ONLINE</span>

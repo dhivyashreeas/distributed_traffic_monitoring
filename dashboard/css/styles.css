@@ -1,15 +1,22 @@
-/* GLASSMORPHISM DARK MODE DESIGN SYSTEM */
-:root {
+/* MULTI-THEME DESIGN SYSTEM */
+:root, [data-theme="dark"] {
   --bg-dark: #0f172a;
-  --bg-card: rgba(30, 41, 59, 0.7);
-  --bg-card-hover: rgba(51, 65, 85, 0.8);
+  --bg-card: rgba(30, 41, 59, 0.75);
+  --bg-card-hover: rgba(51, 65, 85, 0.85);
   --border-color: rgba(255, 255, 255, 0.1);
-  --border-glow: rgba(59, 130, 246, 0.3);
+  --border-glow: rgba(59, 130, 246, 0.35);
   
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --text-dim: #64748b;
-  
+  --nav-bg: rgba(30, 41, 59, 0.75);
+  --page-gradient: 
+    radial-gradient(at 15% 15%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+    radial-gradient(at 85% 85%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+  --brand-gradient: linear-gradient(90deg, #ffffff, #cbd5e1);
+  --logo-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  --card-inner-bg: rgba(15, 23, 42, 0.6);
+
   --color-green: #10b981;
   --color-green-glow: rgba(16, 185, 129, 0.25);
   --color-amber: #f59e0b;
@@ -24,6 +31,93 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
+[data-theme="light"] {
+  --bg-dark: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --border-color: rgba(15, 23, 42, 0.08);
+  --border-glow: rgba(59, 130, 246, 0.4);
+
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #64748b;
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --page-gradient: 
+    radial-gradient(at 15% 15%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+    radial-gradient(at 85% 85%, rgba(99, 102, 241, 0.12) 0px, transparent 50%);
+  --brand-gradient: linear-gradient(90deg, #0f172a, #334155);
+  --logo-gradient: linear-gradient(135deg, #2563eb, #4f46e5);
+  --card-inner-bg: rgba(241, 245, 249, 0.8);
+
+  --color-green: #059669;
+  --color-green-glow: rgba(5, 150, 105, 0.2);
+  --color-amber: #d97706;
+  --color-amber-glow: rgba(217, 119, 6, 0.2);
+  --color-red: #dc2626;
+  --color-red-glow: rgba(220, 38, 38, 0.2);
+  --color-blue: #2563eb;
+  --color-purple: #7c3aed;
+  --color-cyan: #0891b2;
+}
+
+[data-theme="cyberpunk"] {
+  --bg-dark: #05050e;
+  --bg-card: rgba(20, 10, 35, 0.85);
+  --bg-card-hover: rgba(40, 15, 65, 0.9);
+  --border-color: rgba(245, 0, 255, 0.25);
+  --border-glow: rgba(0, 240, 255, 0.6);
+
+  --text-main: #ffffff;
+  --text-muted: #e9d5ff;
+  --text-dim: #c084fc;
+  --nav-bg: rgba(20, 10, 35, 0.85);
+  --page-gradient: 
+    radial-gradient(at 10% 20%, rgba(245, 0, 255, 0.2) 0px, transparent 50%),
+    radial-gradient(at 90% 80%, rgba(0, 240, 255, 0.2) 0px, transparent 50%);
+  --brand-gradient: linear-gradient(90deg, #00f0ff, #f500ff);
+  --logo-gradient: linear-gradient(135deg, #f500ff, #00f0ff);
+  --card-inner-bg: rgba(10, 5, 20, 0.8);
+
+  --color-green: #00ffaa;
+  --color-green-glow: rgba(0, 255, 170, 0.3);
+  --color-amber: #ffb700;
+  --color-amber-glow: rgba(255, 183, 0, 0.3);
+  --color-red: #ff0055;
+  --color-red-glow: rgba(255, 0, 85, 0.3);
+  --color-blue: #00f0ff;
+  --color-purple: #f500ff;
+  --color-cyan: #00e5ff;
+}
+
+[data-theme="emerald"] {
+  --bg-dark: #03140e;
+  --bg-card: rgba(6, 32, 23, 0.85);
+  --bg-card-hover: rgba(10, 48, 34, 0.95);
+  --border-color: rgba(16, 185, 129, 0.25);
+  --border-glow: rgba(52, 211, 153, 0.5);
+
+  --text-main: #ecfdf5;
+  --text-muted: #6ee7b7;
+  --text-dim: #34d399;
+  --nav-bg: rgba(6, 32, 23, 0.85);
+  --page-gradient: 
+    radial-gradient(at 15% 15%, rgba(16, 185, 129, 0.2) 0px, transparent 50%),
+    radial-gradient(at 85% 85%, rgba(5, 150, 105, 0.2) 0px, transparent 50%);
+  --brand-gradient: linear-gradient(90deg, #ecfdf5, #a7f3d0);
+  --logo-gradient: linear-gradient(135deg, #059669, #10b981);
+  --card-inner-bg: rgba(3, 20, 14, 0.7);
+
+  --color-green: #10b981;
+  --color-green-glow: rgba(16, 185, 129, 0.3);
+  --color-amber: #f59e0b;
+  --color-amber-glow: rgba(245, 158, 11, 0.3);
+  --color-red: #f43f5e;
+  --color-red-glow: rgba(244, 63, 94, 0.3);
+  --color-blue: #0ea5e9;
+  --color-purple: #a855f7;
+  --color-cyan: #14b8a6;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -34,12 +128,11 @@ body {
   font-family: var(--font-sans);
   background-color: var(--bg-dark);
   color: var(--text-main);
-  background-image: 
-    radial-gradient(at 15% 15%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-    radial-gradient(at 85% 85%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+  background-image: var(--page-gradient);
   background-attachment: fixed;
   min-height: 100vh;
   line-height: 1.5;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app-container {
@@ -72,20 +165,20 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: var(--logo-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 22px;
   color: #ffffff;
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 20px var(--border-glow);
 }
 
 .brand h1 {
   font-size: 1.35rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(90deg, #ffffff, #cbd5e1);
+  background: var(--brand-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -98,7 +191,40 @@ body {
 .header-status {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
+}
+
+.theme-selector-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card-inner-bg);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+
+.theme-selector-container:hover {
+  border-color: var(--border-glow);
+}
+
+.theme-select {
+  background: transparent;
+  color: var(--text-main);
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+}
+
+.theme-select option {
+  background: var(--bg-dark);
+  color: var(--text-main);
 }
 
 .pulse-indicator {
@@ -108,7 +234,7 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-muted);
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--card-inner-bg);
   padding: 6px 14px;
   border-radius: 20px;
   border: 1px solid var(--border-color);
